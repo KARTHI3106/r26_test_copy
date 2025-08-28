@@ -53,12 +53,14 @@ If you are able to compile your code successfully you should see something like 
 # Solution
 ## Understanding
 Describe what you understood about the problem.
+Understood little to None , this is new to me .
 
 ## Thought Process
 After understanding the problem, describe how you decided to proceed towards solving the question.
 
 ## Implementation
 How did you decide to implement your solution.
+copilot with sonnet 4 helped me in this 
 
 Mention the details, such as the path planning & odometry how you tested it.
 
