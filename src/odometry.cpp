@@ -4,6 +4,10 @@
 #include <iterator>
 #include <numeric>
 
+#ifndef M_PI
+#define M_PI 3.14159265358979323846
+#endif
+
 using namespace std;
 
 Odometry::Odometry(double wheel_radius, double rpm)
@@ -26,7 +30,31 @@ MotionCommand Odometry::computeCommands(vector<pair<int, int>> &path) {
 
   MotionCommand res = {0.0, 0.0}; // store total time and angle traversed
 
- /* Implement you odometry logic here */ 
+  if (path.size() < 2) {
+    return res; // No movement needed
+  }
+  
+  double totalDistance = 0.0;
+  double totalAngle = 0.0;
+  
+  // Calculate total distance
+  for (size_t i = 0; i < path.size() - 1; i++) {
+    double dist = distance(path[i].first, path[i].second, 
+                          path[i+1].first, path[i+1].second);
+    totalDistance += dist;
+  }
+  
+  // Calculate total angle as sum of all direction angles
+  for (size_t i = 0; i < path.size() - 1; i++) {
+    double segmentAngle = angle(path[i].first, path[i].second,
+                               path[i+1].first, path[i+1].second);
+    // Add absolute value of each segment angle
+    totalAngle += abs(segmentAngle);
+  }
+  
+  // Time = distance / velocity (each grid cell is 1 meter)
+  res.time_sec = totalDistance / linear_vel;
+  res.angle_deg = totalAngle;
 
   return res;
 }
